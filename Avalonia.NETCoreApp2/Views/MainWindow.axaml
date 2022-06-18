@@ -4,7 +4,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Avalonia.NETCoreApp2.MainWindow"
-        Title="Avalonia.NETCoreApp2">
+        Title="Avalonia.NETCoreApp2"
+        Background="Transparent"
+        TransparencyLevelHint="AcrylicBlur"
+        ExtendClientAreaToDecorationsHint="True"
+        WindowState="Minimized" CanResize="True" WindowStartupLocation="CenterScreen"
+        MinWidth="800"
+        MinHeight="450">
     
     <Grid>
         <ExperimentalAcrylicBorder IsHitTestVisible="False">
