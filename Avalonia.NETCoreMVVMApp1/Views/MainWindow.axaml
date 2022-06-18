@@ -27,11 +27,16 @@
                     MaterialOpacity="0.65"/>
             </ExperimentalAcrylicBorder.Material>
         </ExperimentalAcrylicBorder>
-    
-        <Menu>
-            <MenuItem Header="_File">
-                <MenuItem Header="_Open..." Command="{Binding DoTheThing}"></MenuItem>
-            </MenuItem>
-        </Menu>
+        
+        <Grid ColumnDefinitions="300, 1, *">
+            <Rectangle Grid.Column="0" Fill="#2C3E50"/>
+            <Grid Grid.Column="0" Margin="10" ColumnDefinitions="*" RowDefinitions="30, 30, 30">
+                <Button Background="#2C3E50" Grid.Row="0" Command="{Binding MenuItem1}">Item 1</Button>
+                <Button Background="#2C3E50" Grid.Row="1" Command="{Binding MenuItem2}">Item 2</Button>
+                <Button Background="#2C3E50" Grid.Row="2" Command="{Binding MenuItem3}">Item 3</Button>
+            </Grid>
+            <GridSplitter Grid.Column="1" Background="#ECF0F1" ResizeDirection="Columns"/>
+            <Rectangle Grid.Column="2" Fill="#34495E"/>
+        </Grid>
     </Grid>  
 </Window>

@@ -5,15 +5,27 @@ using ReactiveUI;
 namespace Avalonia.NETCoreMVVMApp1.ViewModels {
     public class MainWindowViewModel : ViewModelBase {
         public MainWindowViewModel() {
-            DoTheThing = ReactiveCommand.Create(RunTheThing);
+            MenuItem1 = ReactiveCommand.Create(MenuItem1Action);
+            MenuItem2 = ReactiveCommand.Create(MenuItem2Action);
+            MenuItem3 = ReactiveCommand.Create(MenuItem3Action);
         }
         
         public string Greeting => "Welcome to Avalonia!";
     
-        public ReactiveCommand<Unit, Unit> DoTheThing { get; }
+        public ReactiveCommand<Unit, Unit> MenuItem1 { get; }
+        public ReactiveCommand<Unit, Unit> MenuItem2 { get; }
+        public ReactiveCommand<Unit, Unit> MenuItem3 { get; }
 
-        void RunTheThing() {
-            Console.Out.WriteLine("Hello");
+        void MenuItem1Action() {
+            Console.Out.WriteLine("Item 1");
+        }
+
+        void MenuItem2Action() {
+            Console.Out.WriteLine("Item 2");
+        }
+
+        void MenuItem3Action() {
+            Console.Out.WriteLine("Item 3");
         }
     }
 }
