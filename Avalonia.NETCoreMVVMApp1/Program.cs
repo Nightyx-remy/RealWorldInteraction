@@ -1,7 +1,8 @@
 ﻿using Avalonia;
+using Avalonia.ReactiveUI;
 using System;
 
-namespace Avalonia.NETCoreApp2 {
+namespace Avalonia.NETCoreMVVMApp1 {
     class Program {
         // Initialization code. Don't use any Avalonia, third-party APIs or any
         // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
@@ -14,6 +15,7 @@ namespace Avalonia.NETCoreApp2 {
         public static AppBuilder BuildAvaloniaApp()
             => AppBuilder.Configure<App>()
                 .UsePlatformDetect()
-                .LogToTrace();
+                .LogToTrace()
+                .UseReactiveUI();
     }
 }
