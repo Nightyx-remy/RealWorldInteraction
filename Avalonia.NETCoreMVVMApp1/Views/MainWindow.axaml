@@ -28,15 +28,27 @@
             </ExperimentalAcrylicBorder.Material>
         </ExperimentalAcrylicBorder>
         
-        <Grid ColumnDefinitions="300, 1, *">
-            <Rectangle Grid.Column="0" Fill="#2C3E50"/>
-            <Grid Grid.Column="0" Margin="10" ColumnDefinitions="*" RowDefinitions="30, 30, 30">
-                <Button Background="#2C3E50" Grid.Row="0" Command="{Binding MenuItem1}">Item 1</Button>
-                <Button Background="#2C3E50" Grid.Row="1" Command="{Binding MenuItem2}">Item 2</Button>
-                <Button Background="#2C3E50" Grid.Row="2" Command="{Binding MenuItem3}">Item 3</Button>
-            </Grid>
-            <GridSplitter Grid.Column="1" Background="#ECF0F1" ResizeDirection="Columns"/>
-            <Rectangle Grid.Column="2" Fill="#34495E"/>
-        </Grid>
+        <TabControl>
+            <TabItem Header="Drivers" VerticalContentAlignment="Center">
+                <Grid ColumnDefinitions="*, 50, 100, 50, *" RowDefinitions="50, *">
+                    <Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Command="{Binding PrevYear}">&lt;</Button>
+                    <TextBlock Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Year}"/>
+                    <Button Grid.Row="0" Grid.Column="3" HorizontalAlignment="Center" Command="{Binding NextYear}">&gt;</Button>
+                    <DataGrid HorizontalAlignment="Center" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" Items="{Binding Drivers}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}"/>
+                            <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}"/>
+                            <DataGridTextColumn Header="Nationality" Binding="{Binding  Nationality}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Teams" VerticalContentAlignment="Center">
+                
+            </TabItem>
+            <TabItem Header="Events" VerticalContentAlignment="Center">
+                
+            </TabItem>
+        </TabControl>
     </Grid>  
 </Window>

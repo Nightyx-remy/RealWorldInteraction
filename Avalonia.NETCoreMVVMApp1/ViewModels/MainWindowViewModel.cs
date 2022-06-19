@@ -1,31 +1,78 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Reactive;
 using ReactiveUI;
+using System.Net.Http;
+using System.Xml;
+using Avalonia.NETCoreMVVMApp1.Models;
 
 namespace Avalonia.NETCoreMVVMApp1.ViewModels {
-    public class MainWindowViewModel : ViewModelBase {
+    public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged {
         public MainWindowViewModel() {
-            MenuItem1 = ReactiveCommand.Create(MenuItem1Action);
-            MenuItem2 = ReactiveCommand.Create(MenuItem2Action);
-            MenuItem3 = ReactiveCommand.Create(MenuItem3Action);
+            _year = DateTime.Today.Year;
+            PrevYear = ReactiveCommand.Create(PrevYearFn);
+            NextYear = ReactiveCommand.Create(NextYearFn);
+
+            Drivers = new ObservableCollection<DriverModel>();
+            
+            LoadDrivers(Year);
         }
         
-        public string Greeting => "Welcome to Avalonia!";
-    
-        public ReactiveCommand<Unit, Unit> MenuItem1 { get; }
-        public ReactiveCommand<Unit, Unit> MenuItem2 { get; }
-        public ReactiveCommand<Unit, Unit> MenuItem3 { get; }
+        private static HttpClient client = new();
+        public new event PropertyChangedEventHandler? PropertyChanged;
 
-        void MenuItem1Action() {
-            Console.Out.WriteLine("Item 1");
+        public ObservableCollection<DriverModel> Drivers { get; }
+
+        private int _year;
+        public int Year {
+            get => _year;
+            set {
+                _year = value;
+                OnPropertyChanged("Year");
+                Drivers.Clear();
+                LoadDrivers(Year);
+            }
         }
 
-        void MenuItem2Action() {
-            Console.Out.WriteLine("Item 2");
+        public ReactiveCommand<Unit, Unit> PrevYear { get; }
+        public ReactiveCommand<Unit, Unit> NextYear { get; }
+
+        public void OnPropertyChanged(string propertyName) =>
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        
+        void PrevYearFn() {
+            if (Year <= 1950) return; // Min year 1950
+            Year--;
         }
 
-        void MenuItem3Action() {
-            Console.Out.WriteLine("Item 3");
+        void NextYearFn() {
+            if (Year >= DateTime.Today.Year) return;
+            Year++;
         }
+        
+        private async void LoadDrivers(int year) {
+            var response = await client.GetAsync($"https://ergast.com/api/f1/{year}/drivers");
+            if (!response.IsSuccessStatusCode) return;
+            
+            var str = response.Content.ReadAsStringAsync().Result;
+                
+            var doc = new XmlDocument();
+            doc.LoadXml(str);
+
+            var drivers = doc.DocumentElement?["DriverTable"];
+            foreach (XmlElement driver in drivers?.ChildNodes) {
+                var firstName = driver["GivenName"]?.InnerText;
+                var lastName = driver["FamilyName"]?.InnerText;
+                var nationality = driver["Nationality"]?.InnerText;
+                if (firstName != null && lastName != null && nationality != null)
+                    Drivers.Add(new DriverModel() {
+                        FirstName = firstName,
+                        LastName = lastName,
+                        Nationality = nationality
+                    });
+            }
+        }
+        
     }
 }
