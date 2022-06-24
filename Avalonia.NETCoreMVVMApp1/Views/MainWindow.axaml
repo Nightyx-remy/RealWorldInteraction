@@ -3,6 +3,7 @@
         xmlns:vm="using:Avalonia.NETCoreMVVMApp1.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ScottPlot="clr-namespace:ScottPlot.Avalonia;assembly=ScottPlot.Avalonia"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Avalonia.NETCoreMVVMApp1.Views.MainWindow"
         Title="Real World Interaction"
@@ -42,8 +43,12 @@
                                 <DataGridTemplateColumn Header="First Name">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Button>
-                                                <TextBlock Text="{Binding FirstName}"></TextBlock>
+                                            <Button Command="{Binding OpenWikipedia}">
+                                                <TextBlock Text="{Binding FirstName}">
+                                                    <TextBlock.Foreground>#4444CC</TextBlock.Foreground>
+                                                </TextBlock>
+                                                <Button.BorderThickness>0</Button.BorderThickness>
+                                                <Button.Background>#00000000</Button.Background>
                                             </Button>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
@@ -51,9 +56,11 @@
                                 <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}"/>
                                 <DataGridTextColumn Header="Nationality" Binding="{Binding  Nationality}"/>
                                 <DataGridTextColumn Header="Team" Binding="{Binding  Team}"/>
+                                <DataGridTextColumn Header="Permanent Number" Binding="{Binding  PermanentNumber}"/>
                                 <DataGridTextColumn Header="Points" Binding="{Binding  Points}"/>
                             </DataGrid.Columns>
                         </DataGrid>
+                        <ScottPlot:AvaPlot Grid.Column="1" Content="{Binding Plot1}"/>
                     </Grid>
                 </Grid>
             </TabItem>
