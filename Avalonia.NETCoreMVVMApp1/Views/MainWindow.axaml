@@ -39,6 +39,8 @@
                             <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}"/>
                             <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}"/>
                             <DataGridTextColumn Header="Nationality" Binding="{Binding  Nationality}"/>
+                            <DataGridTextColumn Header="Team" Binding="{Binding  Team}"/>
+                            <DataGridTextColumn Header="Points" Binding="{Binding  Points}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>

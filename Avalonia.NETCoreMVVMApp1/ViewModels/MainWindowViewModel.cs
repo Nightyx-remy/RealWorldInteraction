@@ -51,8 +51,64 @@ namespace Avalonia.NETCoreMVVMApp1.ViewModels {
             Year++;
         }
         
+        private async void LoadTeams(int year) {
+
+            /*var drivers = doc.DocumentElement?["DriverTable"];
+            foreach (XmlElement driver in drivers?.ChildNodes) {
+                var firstName = driver["GivenName"]?.InnerText;
+                var lastName = driver["FamilyName"]?.InnerText;
+                var nationality = driver["Nationality"]?.InnerText;
+                if (firstName != null && lastName != null && nationality != null)
+                    Drivers.Add(new DriverModel() {
+                        FirstName = firstName,
+                        LastName = lastName,
+                        Nationality = nationality
+                    });
+            }*/
+        }
+        
         private async void LoadDrivers(int year) {
-            var response = await client.GetAsync($"https://ergast.com/api/f1/{year}/drivers");
+            var response = await client.GetAsync($"https://ergast.com/api/f1/{year}/driverStandings");
+            if (!response.IsSuccessStatusCode) return;
+            
+            var str = response.Content.ReadAsStringAsync().Result;
+            Console.Out.WriteLine($"{str}");
+                
+            var doc = new XmlDocument();
+            doc.LoadXml(str);
+
+            var standings = doc.DocumentElement?["StandingsTable"]?["StandingsList"];
+
+            if (standings == null) return;
+            foreach (XmlElement driverStanding in standings?.ChildNodes) {
+                var driver = driverStanding["Driver"];
+                if (driver == null) continue;
+                
+                var constructor = driverStanding["Constructor"];
+                if (constructor == null) continue;
+                
+                var firstName = driver["GivenName"]?.InnerText;
+                var lastName = driver["FamilyName"]?.InnerText;
+                var nationality = driver["Nationality"]?.InnerText;
+                var team = constructor["Name"]?.InnerText;
+                decimal points;
+                try {
+                    points = Convert.ToDecimal(driverStanding.Attributes["points"]?.Value);   
+                } catch (Exception e) {
+                    Console.Out.WriteLine($"{driverStanding.Attributes["points"]?.Value}");
+                    points = 0;
+                }
+                if (firstName != null && lastName != null && nationality != null && team != null)
+                    Drivers.Add(new DriverModel() {
+                        FirstName = firstName,
+                        LastName = lastName,
+                        Nationality = nationality,
+                        Team = team,
+                        Points = points,
+                    });
+            }
+            
+            /*var response = await client.GetAsync($"https://ergast.com/api/f1/{year}/drivers");
             if (!response.IsSuccessStatusCode) return;
             
             var str = response.Content.ReadAsStringAsync().Result;
@@ -71,7 +127,7 @@ namespace Avalonia.NETCoreMVVMApp1.ViewModels {
                         LastName = lastName,
                         Nationality = nationality
                     });
-            }
+            }*/
         }
         
     }
