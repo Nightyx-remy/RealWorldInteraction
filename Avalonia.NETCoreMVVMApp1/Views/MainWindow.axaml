@@ -4,15 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ScottPlot="clr-namespace:ScottPlot.Avalonia;assembly=ScottPlot.Avalonia"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="1500" d:DesignHeight="600"
         x:Class="Avalonia.NETCoreMVVMApp1.Views.MainWindow"
         Title="Real World Interaction"
         Background="Transparent"
         TransparencyLevelHint="AcrylicBlur"
         ExtendClientAreaToDecorationsHint="True"
-        WindowState="Minimized" CanResize="True" WindowStartupLocation="CenterScreen"
-        MinWidth="800"
-        MinHeight="450">
+        WindowState="Maximized" CanResize="True" WindowStartupLocation="CenterOwner"
+        MinWidth="1400"
+        MinHeight="600">
     
     <Design.DataContext>
         <vm:MainWindowViewModel/>
@@ -37,7 +37,7 @@
                         <TextBlock Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Year}"/>
                         <Button Grid.Row="0" Grid.Column="3" HorizontalAlignment="Center" Command="{Binding NextYear}">⮞</Button>
                     </Grid>
-                    <Grid Grid.Row="1" ColumnDefinitions="*, *">
+                    <Grid Grid.Row="1" ColumnDefinitions=" *, *">
                         <DataGrid HorizontalAlignment="Left" Grid.Row="0" Grid.Column="0" Items="{Binding Drivers}" IsReadOnly="true">
                             <DataGrid.Columns>
                                 <DataGridTemplateColumn Header="First Name">
@@ -60,7 +60,7 @@
                                 <DataGridTextColumn Header="Points" Binding="{Binding  Points}"/>
                             </DataGrid.Columns>
                         </DataGrid>
-                        <ScottPlot:AvaPlot Grid.Column="1" Content="{Binding Plot1}"/>
+                        <ScottPlot:AvaPlot Grid.Row= "0" Grid.Column="1" MinWidth= "200" MinHeight = "200" MaxHeight="600" MaxWidth="600" Content="{Binding PieChart}"  />
                     </Grid>
                 </Grid>
             </TabItem>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Drawing;
 using System.Reactive;
 using ReactiveUI;
 using System.Net.Http;
@@ -8,6 +9,7 @@ using System.Reactive.Disposables;
 using System.Threading.Tasks;
 using System.Transactions;
 using System.Xml;
+using Avalonia.Controls;
 using Avalonia.NETCoreMVVMApp1.Models;
 using ScottPlot.Avalonia;
 
@@ -22,7 +24,7 @@ namespace Avalonia.NETCoreMVVMApp1.ViewModels {
 
             Drivers = new ObservableCollection<DriverModel>();
 
-            Plot1 = new AvaPlot();
+            PieChart = new AvaPlot();
             LoadAll();
         }
         
@@ -45,7 +47,8 @@ namespace Avalonia.NETCoreMVVMApp1.ViewModels {
         public ReactiveCommand<Unit, Unit> PrevYear { get; }
         public ReactiveCommand<Unit, Unit> NextYear { get; }
         public ReactiveCommand<Unit, Unit> OpenWikipedia { get; }
-        public AvaPlot Plot1 { get; }
+        
+        public AvaPlot PieChart { get; }
 
         public void OnPropertyChanged(string propertyName) =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -119,19 +122,28 @@ namespace Avalonia.NETCoreMVVMApp1.ViewModels {
         }
 
         public void LoadPlot() {
-            int size = Drivers.Count;
-            double[] points = new double [size];
-
-            int index = 0;
-            foreach (DriverModel Driver in Drivers) {
-                points[index] = Driver.Points;
+            var size = Drivers.Count;
+            var points = new double [size];
+            var driverNames = new string[size];
+            var index = 0;
+            foreach (var driver in Drivers) {
+                points[index] = driver.Points;
+                driverNames[index] = driver.FullName;
                 index++;
             }
-
-            Plot1.Plot.Clear();
-            Plot1.Plot.AddPie(points);
-            OnPropertyChanged("Plot1");
+            //PieChart.Configure(enableZooming: false, enablePaning: false);
+            PieChart.Plot.Style(ScottPlot.Style.Gray1);
+            PieChart.Plot.Clear();
+            PieChart.Plot.Title("Season point distribution");
+            PieChart.Configuration.RightClickDragZoom = false;
+            PieChart.Configuration.MiddleClickDragZoom = false;
+            PieChart.Configuration.ScrollWheelZoom = false;
+            PieChart.Configuration.LeftClickDragPan = false;
+            var pie = PieChart.Plot.AddPie(points);
+            pie.Explode = true;
+            pie.DonutSize = 0.6;
+            
+            //var highQualityBitmap = PieChart.Plot.Render(lowQuality: false);
         }
-        
     }
 }
