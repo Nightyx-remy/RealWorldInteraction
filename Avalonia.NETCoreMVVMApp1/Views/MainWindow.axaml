@@ -30,19 +30,31 @@
         
         <TabControl>
             <TabItem Header="Season" VerticalContentAlignment="Center">
-                <Grid ColumnDefinitions="*, 50, 100, 50, *" RowDefinitions="50, *">
-                    <Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Command="{Binding PrevYear}">⮜</Button>
-                    <TextBlock Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Year}"/>
-                    <Button Grid.Row="0" Grid.Column="3" HorizontalAlignment="Center" Command="{Binding NextYear}">⮞</Button>
-                    <DataGrid HorizontalAlignment="Left" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" Items="{Binding Drivers}">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}"/>
-                            <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}"/>
-                            <DataGridTextColumn Header="Nationality" Binding="{Binding  Nationality}"/>
-                            <DataGridTextColumn Header="Team" Binding="{Binding  Team}"/>
-                            <DataGridTextColumn Header="Points" Binding="{Binding  Points}"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
+                <Grid RowDefinitions="50, *">
+                    <Grid Grid.Row="0" ColumnDefinitions="*, 50, 100, 50, *">
+                        <Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Command="{Binding PrevYear}">⮜</Button>
+                        <TextBlock Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Year}"/>
+                        <Button Grid.Row="0" Grid.Column="3" HorizontalAlignment="Center" Command="{Binding NextYear}">⮞</Button>
+                    </Grid>
+                    <Grid Grid.Row="1" ColumnDefinitions="*, *">
+                        <DataGrid HorizontalAlignment="Left" Grid.Row="0" Grid.Column="0" Items="{Binding Drivers}">
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn Header="First Name">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button>
+                                                <TextBlock Text="{Binding FirstName}"></TextBlock>
+                                            </Button>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}"/>
+                                <DataGridTextColumn Header="Nationality" Binding="{Binding  Nationality}"/>
+                                <DataGridTextColumn Header="Team" Binding="{Binding  Team}"/>
+                                <DataGridTextColumn Header="Points" Binding="{Binding  Points}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
                 </Grid>
             </TabItem>
             <TabItem Header="Teams" VerticalContentAlignment="Center">
