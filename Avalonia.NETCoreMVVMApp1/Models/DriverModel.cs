@@ -15,6 +15,7 @@ public class DriverModel
     
     public string Team { get; set; }
     
+    // TODO: Calculate in the getter
     // public byte Age { get; set; }
     
     // public DateTime DateOfBirth { get; set; }
