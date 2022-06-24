@@ -38,7 +38,7 @@
                         <Button Grid.Row="0" Grid.Column="3" HorizontalAlignment="Center" Command="{Binding NextYear}">⮞</Button>
                     </Grid>
                     <Grid Grid.Row="1" ColumnDefinitions="*, *">
-                        <DataGrid HorizontalAlignment="Left" Grid.Row="0" Grid.Column="0" Items="{Binding Drivers}">
+                        <DataGrid HorizontalAlignment="Left" Grid.Row="0" Grid.Column="0" Items="{Binding Drivers}" IsReadOnly="true">
                             <DataGrid.Columns>
                                 <DataGridTemplateColumn Header="First Name">
                                     <DataGridTemplateColumn.CellTemplate>
