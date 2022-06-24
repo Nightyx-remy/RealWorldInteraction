@@ -29,12 +29,12 @@
         </ExperimentalAcrylicBorder>
         
         <TabControl>
-            <TabItem Header="Drivers" VerticalContentAlignment="Center">
+            <TabItem Header="Season" VerticalContentAlignment="Center">
                 <Grid ColumnDefinitions="*, 50, 100, 50, *" RowDefinitions="50, *">
-                    <Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Command="{Binding PrevYear}">&lt;</Button>
+                    <Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Command="{Binding PrevYear}">⮜</Button>
                     <TextBlock Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Year}"/>
-                    <Button Grid.Row="0" Grid.Column="3" HorizontalAlignment="Center" Command="{Binding NextYear}">&gt;</Button>
-                    <DataGrid HorizontalAlignment="Center" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" Items="{Binding Drivers}">
+                    <Button Grid.Row="0" Grid.Column="3" HorizontalAlignment="Center" Command="{Binding NextYear}">⮞</Button>
+                    <DataGrid HorizontalAlignment="Left" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" Items="{Binding Drivers}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}"/>
                             <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}"/>

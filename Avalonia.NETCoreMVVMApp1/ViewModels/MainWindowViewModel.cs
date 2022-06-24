@@ -23,7 +23,7 @@ namespace Avalonia.NETCoreMVVMApp1.ViewModels {
         public new event PropertyChangedEventHandler? PropertyChanged;
 
         public ObservableCollection<DriverModel> Drivers { get; }
-
+        
         private int _year;
         public int Year {
             get => _year;
@@ -49,22 +49,6 @@ namespace Avalonia.NETCoreMVVMApp1.ViewModels {
         void NextYearFn() {
             if (Year >= DateTime.Today.Year) return;
             Year++;
-        }
-        
-        private async void LoadTeams(int year) {
-
-            /*var drivers = doc.DocumentElement?["DriverTable"];
-            foreach (XmlElement driver in drivers?.ChildNodes) {
-                var firstName = driver["GivenName"]?.InnerText;
-                var lastName = driver["FamilyName"]?.InnerText;
-                var nationality = driver["Nationality"]?.InnerText;
-                if (firstName != null && lastName != null && nationality != null)
-                    Drivers.Add(new DriverModel() {
-                        FirstName = firstName,
-                        LastName = lastName,
-                        Nationality = nationality
-                    });
-            }*/
         }
         
         private async void LoadDrivers(int year) {
@@ -107,27 +91,6 @@ namespace Avalonia.NETCoreMVVMApp1.ViewModels {
                         Points = points,
                     });
             }
-            
-            /*var response = await client.GetAsync($"https://ergast.com/api/f1/{year}/drivers");
-            if (!response.IsSuccessStatusCode) return;
-            
-            var str = response.Content.ReadAsStringAsync().Result;
-                
-            var doc = new XmlDocument();
-            doc.LoadXml(str);
-
-            var drivers = doc.DocumentElement?["DriverTable"];
-            foreach (XmlElement driver in drivers?.ChildNodes) {
-                var firstName = driver["GivenName"]?.InnerText;
-                var lastName = driver["FamilyName"]?.InnerText;
-                var nationality = driver["Nationality"]?.InnerText;
-                if (firstName != null && lastName != null && nationality != null)
-                    Drivers.Add(new DriverModel() {
-                        FirstName = firstName,
-                        LastName = lastName,
-                        Nationality = nationality
-                    });
-            }*/
         }
         
     }
