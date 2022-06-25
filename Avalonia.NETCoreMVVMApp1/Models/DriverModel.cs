@@ -19,7 +19,7 @@ public class DriverModel
     public int PermanentNumber { get; set; }
     public string URL { get; set; }
     
-    // TODO: Calculate in the getter
+    // TODO: Calculate age in the getter
     public DateTime DateOfBirth { get; set; }
     
     public string Team { get; set; }

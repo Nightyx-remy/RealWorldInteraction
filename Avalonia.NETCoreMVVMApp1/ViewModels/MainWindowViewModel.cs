@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Transactions;
 using System.Xml;
 using Avalonia.Controls;
+using Avalonia.Media;
 using Avalonia.NETCoreMVVMApp1.Models;
 using ScottPlot.Avalonia;
 
@@ -126,12 +127,39 @@ namespace Avalonia.NETCoreMVVMApp1.ViewModels {
             var points = new double [size];
             var driverNames = new string[size];
             var index = 0;
+            var sum = 0.0;
+            //getting all drivers points
             foreach (var driver in Drivers) {
                 points[index] = driver.Points;
+                sum = sum + points[index];
                 driverNames[index] = driver.FullName;
                 index++;
             }
-            //PieChart.Configure(enableZooming: false, enablePaning: false);
+
+            var sumOfOthers = 0.0;
+            var lowPointCount = 0;
+            //categorizing low driver points (below 2% of overall point sum) as "other"
+             for (var i = 0; i < size; i++)
+             {
+                 if (0.02 > (points[i] / sum)) //condition for low driver points
+                 {
+                     sumOfOthers = sumOfOthers + points[i];
+                     lowPointCount++;
+                 }
+             }
+             var pointsToPlot = new double [size-lowPointCount];
+             var driverNamesToPlot = new string[size-lowPointCount];
+             for (var i = 0; i < pointsToPlot.Length-1; i++)
+             {
+                 if (0.02 < (points[i] / sum)) //condition for low driver points
+                 {
+                     pointsToPlot[i] = points[i];
+                     driverNamesToPlot[i] = driverNames[i];
+                 } 
+
+            }
+             pointsToPlot[^1] = sumOfOthers;
+           driverNamesToPlot[^1] = "Others";
             PieChart.Plot.Style(ScottPlot.Style.Gray1);
             PieChart.Plot.Clear();
             PieChart.Plot.Title("Season point distribution");
@@ -139,11 +167,12 @@ namespace Avalonia.NETCoreMVVMApp1.ViewModels {
             PieChart.Configuration.MiddleClickDragZoom = false;
             PieChart.Configuration.ScrollWheelZoom = false;
             PieChart.Configuration.LeftClickDragPan = false;
-            var pie = PieChart.Plot.AddPie(points);
-            pie.Explode = true;
-            pie.DonutSize = 0.6;
+            var pie = PieChart.Plot.AddPie(pointsToPlot);
             
-            //var highQualityBitmap = PieChart.Plot.Render(lowQuality: false);
+            pie.SliceLabels = driverNamesToPlot;
+            pie.ShowLabels = true;
+            pie.Explode = true;
+            pie.DonutSize = 0.4;
         }
     }
 }
