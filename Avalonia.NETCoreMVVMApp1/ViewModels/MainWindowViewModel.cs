@@ -4,14 +4,18 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Reactive;
 using ReactiveUI;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Xml;
+using Avalonia.Controls;
 using Avalonia.NETCoreMVVMApp1.Models;
+using Avalonia.Platform;
 using ScottPlot.Avalonia;
+using Bitmap = System.Drawing.Bitmap;
 
 namespace Avalonia.NETCoreMVVMApp1.ViewModels {
     public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged {
@@ -88,6 +92,7 @@ namespace Avalonia.NETCoreMVVMApp1.ViewModels {
         // Plots
         public AvaPlot DriverChart { get; }
         public AvaPlot TeamChart { get; }
+        
 
         // Load all the drivers and teams to the lists and generate the plots
         private async void LoadAll() {
@@ -135,7 +140,9 @@ namespace Avalonia.NETCoreMVVMApp1.ViewModels {
 
                 if (firstName == null || lastName == null || nationality == null || team == null || url == null ||
                     teamNationality == null || teamUrl == null) continue;
-                Drivers.Add(new DriverModel(firstName, lastName, url, team, nationality, permanentNumber, points));
+                //TODO: load it on the table
+                var flag  = LoadLogo(nationality);
+                Drivers.Add(new DriverModel(firstName, lastName, url, team, nationality, permanentNumber, points, flag));
                 foreach (var c in Constructors) {
                     if (c.Name != team) continue;
                     c.Points += points;
@@ -144,6 +151,15 @@ namespace Avalonia.NETCoreMVVMApp1.ViewModels {
                 Constructors.Add(new ConstructorModel(team, teamNationality, points, teamUrl));
                 EOL: ;
             }
+        }
+        public static Bitmap LoadLogo(string nationality)
+        {
+            //var assets = AvaloniaLocator.Current.GetService<IAssetLoader>();
+            var location =  System.AppDomain.CurrentDomain.BaseDirectory + @"Flags\" + nationality + " Flag.gif";
+            var original = new Bitmap(location);
+            //TODO: if the image is too big, resize it
+            //var resized = new Bitmap(original , new Size(original.Width/4,original.Height/4));
+            return original;
         }
 
         private void SetupPlot(AvaPlot plot, string name) {

@@ -43,6 +43,7 @@
                                 <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}"/>
                                 <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}"/>
                                 <DataGridTextColumn Header="Nationality" Binding="{Binding  Nationality}"/>
+                                <DataGridTextColumn Header="Flag" Binding="{Binding  Flag}"/>
                                 <DataGridTextColumn Header="Team" Binding="{Binding  Team}"/>
                                 <DataGridTextColumn Header="Permanent Number" Binding="{Binding  PermanentNumber}"/>
                                 <DataGridTextColumn Header="Points" Binding="{Binding  Points}"/>
@@ -66,7 +67,7 @@
                         <DataGrid HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Items="{Binding Constructors}" IsReadOnly="true">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Name" Binding="{Binding  Name}"/>
-                                <DataGridTextColumn Header="Nationality" Binding="{Binding  Nationality}"/>
+                                <DataGridTextColumn Header="Nationality" Binding="{Binding  Nationality} "/>
                                 <DataGridTextColumn Header="Points" Binding="{Binding  Points}"/>
                             </DataGrid.Columns>
                             <DataGrid.KeyBindings>
