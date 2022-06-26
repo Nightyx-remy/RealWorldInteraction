@@ -11,11 +11,10 @@ using ReactiveUI;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Xml;
-using Avalonia.Controls;
 using Avalonia.NETCoreMVVMApp1.Models;
-using Avalonia.Platform;
 using ScottPlot.Avalonia;
 using Bitmap = System.Drawing.Bitmap;
+using Image = System.Drawing.Image;
 
 namespace Avalonia.NETCoreMVVMApp1.ViewModels {
     public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged {
@@ -141,8 +140,12 @@ namespace Avalonia.NETCoreMVVMApp1.ViewModels {
                 if (firstName == null || lastName == null || nationality == null || team == null || url == null ||
                     teamNationality == null || teamUrl == null) continue;
                 //TODO: load it on the table
-                var flag  = LoadLogo(nationality);
-                Drivers.Add(new DriverModel(firstName, lastName, url, team, nationality, permanentNumber, points, flag));
+                var location =  AppDomain.CurrentDomain.BaseDirectory + @"Flags\" + nationality + " Flag.gif";
+                var imageToResize = Image.FromFile(location);
+                var bitmapToResize = new Bitmap(imageToResize);
+                var resizedFlag = ResizeImage(bitmapToResize, new Size(40, 25));
+                //var flag  = LoadLogo(nationality);
+                Drivers.Add(new DriverModel(firstName, lastName, url, team, nationality, permanentNumber, points, resizedFlag));
                 foreach (var c in Constructors) {
                     if (c.Name != team) continue;
                     c.Points += points;
@@ -152,6 +155,36 @@ namespace Avalonia.NETCoreMVVMApp1.ViewModels {
                 EOL: ;
             }
         }
+
+        //https://www.c-sharpcorner.com/UploadFile/ishbandhu2009/resize-an-image-in-C-Sharp/
+        private static Image ResizeImage(Image imageToResize, Size size)
+        {
+            //Get the image current width  
+            int sourceWidth = imageToResize.Width;
+            //Get the image current height  
+            int sourceHeight = imageToResize.Height;
+            float nPercent;
+            //Calulate  width with new desired size  
+            var nPercentW = ((float)size.Width / sourceWidth);
+            //Calculate height with new desired size  
+            var nPercentH = ((float)size.Height /sourceHeight);
+            if (nPercentH < nPercentW)
+                nPercent = nPercentH;
+            else
+                nPercent = nPercentW;
+            //New Width  
+            var finalWidth = (int)(sourceWidth * nPercent);
+            //New Height  
+            var finalHeight = (int)(sourceHeight * nPercent);
+            var bitmap = new Bitmap(finalWidth, finalHeight);
+            var graphics = Graphics.FromImage(bitmap);
+            graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            // Draw image with new width and height  
+            graphics.DrawImage(imageToResize, 0, 0, finalWidth, finalHeight);
+            graphics.Dispose();
+            return bitmap;
+        }
+
         public static Bitmap LoadLogo(string nationality)
         {
             //var assets = AvaloniaLocator.Current.GetService<IAssetLoader>();
