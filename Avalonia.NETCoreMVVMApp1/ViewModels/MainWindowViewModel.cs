@@ -197,7 +197,7 @@ namespace Avalonia.NETCoreMVVMApp1.ViewModels {
 
             // Generate Pie chart
             var pie = plot.Plot.AddPie(pointsToPlot);
-            pie.SliceLabels = names;
+            pie.SliceLabels = namesToPlot;
             pie.ShowLabels = true;
             pie.Explode = true;
             pie.DonutSize = 0.4;
