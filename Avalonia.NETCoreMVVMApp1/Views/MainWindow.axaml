@@ -30,7 +30,7 @@
         </ExperimentalAcrylicBorder>
         
         <TabControl>
-            <TabItem Header="Season" VerticalContentAlignment="Center">
+            <TabItem Header="Drivers" VerticalContentAlignment="Center">
                 <Grid RowDefinitions="50, *">
                     <Grid Grid.Row="0" ColumnDefinitions="*, 50, 100, 50, *">
                         <Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Command="{Binding PrevYear}">⮜</Button>
@@ -38,37 +38,44 @@
                         <Button Grid.Row="0" Grid.Column="3" HorizontalAlignment="Center" Command="{Binding NextYear}">⮞</Button>
                     </Grid>
                     <Grid Grid.Row="1" ColumnDefinitions=" *, *">
-                        <DataGrid HorizontalAlignment="Left" Grid.Row="0" Grid.Column="0" Items="{Binding Drivers}" IsReadOnly="true">
+                        <DataGrid HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Items="{Binding Drivers}" IsReadOnly="true">
                             <DataGrid.Columns>
-                                <DataGridTemplateColumn Header="First Name">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Button Command="{Binding OpenWikipedia}">
-                                                <TextBlock Text="{Binding FirstName}">
-                                                    <TextBlock.Foreground>#4444CC</TextBlock.Foreground>
-                                                </TextBlock>
-                                                <Button.BorderThickness>0</Button.BorderThickness>
-                                                <Button.Background>#00000000</Button.Background>
-                                            </Button>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}"/>
                                 <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}"/>
                                 <DataGridTextColumn Header="Nationality" Binding="{Binding  Nationality}"/>
                                 <DataGridTextColumn Header="Team" Binding="{Binding  Team}"/>
                                 <DataGridTextColumn Header="Permanent Number" Binding="{Binding  PermanentNumber}"/>
                                 <DataGridTextColumn Header="Points" Binding="{Binding  Points}"/>
                             </DataGrid.Columns>
+                            <DataGrid.KeyBindings>
+                                <KeyBinding Gesture="Enter" Command="{Binding OpenWikipedia}" CommandParameter="{Binding $self.SelectedItem}"/>
+                            </DataGrid.KeyBindings>
                         </DataGrid>
-                        <ScottPlot:AvaPlot Grid.Row= "0" Grid.Column="1" MinWidth= "200" MinHeight = "200" MaxHeight="600" MaxWidth="600" Content="{Binding PieChart}"  />
+                        <ScottPlot:AvaPlot Grid.Row= "0" Grid.Column="1" MinWidth= "200" MinHeight = "200" MaxHeight="600" MaxWidth="600" Content="{Binding DriverChart}" />
                     </Grid>
                 </Grid>
             </TabItem>
             <TabItem Header="Teams" VerticalContentAlignment="Center">
-                
-            </TabItem>
-            <TabItem Header="Events" VerticalContentAlignment="Center">
-                
+                <Grid RowDefinitions="50, *">
+                    <Grid Grid.Row="0" ColumnDefinitions="*, 50, 100, 50, *">
+                        <Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Command="{Binding PrevYear}">⮜</Button>
+                        <TextBlock Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Year}"/>
+                        <Button Grid.Row="0" Grid.Column="3" HorizontalAlignment="Center" Command="{Binding NextYear}">⮞</Button>
+                    </Grid>
+                    <Grid Grid.Row="1" ColumnDefinitions=" *, *">
+                        <DataGrid HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Items="{Binding Constructors}" IsReadOnly="true">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Name" Binding="{Binding  Name}"/>
+                                <DataGridTextColumn Header="Nationality" Binding="{Binding  Nationality}"/>
+                                <DataGridTextColumn Header="Points" Binding="{Binding  Points}"/>
+                            </DataGrid.Columns>
+                            <DataGrid.KeyBindings>
+                                <KeyBinding Gesture="Enter" Command="{Binding OpenWikipedia}" CommandParameter="{Binding $self.SelectedItem}"/>
+                            </DataGrid.KeyBindings>
+                        </DataGrid>
+                        <ScottPlot:AvaPlot Grid.Row= "0" Grid.Column="1" MinWidth= "200" MinHeight = "200" MaxHeight="600" MaxWidth="600" Content="{Binding TeamChart}" />
+                    </Grid>
+                </Grid>
             </TabItem>
         </TabControl>
     </Grid>  
