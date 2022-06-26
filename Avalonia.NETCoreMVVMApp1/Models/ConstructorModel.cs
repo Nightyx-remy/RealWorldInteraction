@@ -2,21 +2,17 @@
 
 namespace Avalonia.NETCoreMVVMApp1.Models;
 
-public class ConstructorModel
-{
-    public string Name { get; set; }
-    
-    public string Nationality { get; set; }
+public class ConstructorModel : IEntityModel {
+    public string Name { get; }
+    public string Nationality { get; }
+    public double Points { get; set; }
+    public string Url { get; }
 
-    public Image NationalFlag { get; set; }
-    
-    //TODO: implement a function, that goes through the selected year's events and calculates all the points
-    //TODO: consider putting point calculation function to the SeasonModel
-    public ushort Points { get; set; }
-    
-    //Each constructor has two drivers
-    //TODO: decide how to include them. In a list? Seperate values?
-    //public List<DriverModel>
-    
+    public ConstructorModel(string name, string nationality, double points, string url) {
+        Name = name;
+        Nationality = nationality;
+        Points = points;
+        Url = url;
+    }
 
 }
