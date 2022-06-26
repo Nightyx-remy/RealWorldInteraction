@@ -48,7 +48,7 @@
                                 <DataGridTextColumn Header="Points" Binding="{Binding  Points}"/>
                             </DataGrid.Columns>
                             <DataGrid.KeyBindings>
-                                <KeyBinding Gesture="Enter" Command="{Binding OpenWikipedia}" CommandParameter="{Binding $self.SelectedItem.Url}"/>
+                                <KeyBinding Gesture="Enter" Command="{Binding OpenWikipedia}" CommandParameter="{Binding $self.SelectedItem}"/>
                             </DataGrid.KeyBindings>
                         </DataGrid>
                         <ScottPlot:AvaPlot Grid.Row= "0" Grid.Column="1" MinWidth= "200" MinHeight = "200" MaxHeight="600" MaxWidth="600" Content="{Binding DriverChart}" />
@@ -70,15 +70,12 @@
                                 <DataGridTextColumn Header="Points" Binding="{Binding  Points}"/>
                             </DataGrid.Columns>
                             <DataGrid.KeyBindings>
-                                <KeyBinding Gesture="Enter" Command="{Binding OpenWikipedia}" CommandParameter="{Binding $self.SelectedItem.Url}"/>
+                                <KeyBinding Gesture="Enter" Command="{Binding OpenWikipedia}" CommandParameter="{Binding $self.SelectedItem}"/>
                             </DataGrid.KeyBindings>
                         </DataGrid>
                         <ScottPlot:AvaPlot Grid.Row= "0" Grid.Column="1" MinWidth= "200" MinHeight = "200" MaxHeight="600" MaxWidth="600" Content="{Binding TeamChart}" />
                     </Grid>
                 </Grid>
-            </TabItem>
-            <TabItem Header="Events" VerticalContentAlignment="Center">
-                
             </TabItem>
         </TabControl>
     </Grid>  
